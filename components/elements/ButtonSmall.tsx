@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const ButtonSmall = ({buttonName} : {buttonName : string}) => {
+const ButtonSmall = ({ buttonName }: { buttonName: string }) => {
   return (
-    <button className='p-10 rounded-[4px] py-[7px] px-[9px] h-[30px] w-[82px]'>{buttonName}</button>
-  )
-}
+    <>
+      <button className="h-[30px] w-[83.77px] rounded-[4px] border-[0.5px] py-[7px] px-[9px] flex items-center justify-center gap-[10px]  ">
+        <p className="font-[600] text-[13px] leading-[15.73px] text-[#546A78]">
+          {buttonName}
+        </p>
+      </button>
+    </>
+  );
+};
 
-export default ButtonSmall
+export default ButtonSmall;

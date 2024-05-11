@@ -17,8 +17,6 @@ const QueryCondition = () => {
         */}
         <div className="w-full max-w-[344px] h-[44px] py-[4px] px-[12px] gap-[10px] flex flex-row  items-center justify-center ">
           <DatePicker defaultValue="2023-05-01" />
-
-
           <ArrowSmall />
           <DatePicker defaultValue="2024-05-01" />
 
