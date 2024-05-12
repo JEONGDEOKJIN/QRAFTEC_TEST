@@ -8,7 +8,7 @@ import {
 
 import React from "react";
 
-const OptionSelect = () => {
+const DropDownSelect = () => {
   return (
     <>
       <div className="w-full  max-w-[160px] h-[32px]">
@@ -27,4 +27,4 @@ const OptionSelect = () => {
   );
 };
 
-export default OptionSelect;
+export default DropDownSelect;

@@ -7,12 +7,7 @@ const ListView = () => {
       <section className="h-[966px] overflow-y-scroll rounded-[3px] bg-[#FFFFFF] py-[10px] px-[14px] flex flex-col   gap-[10px]">
 
         <DisclosureItem />
-        <DisclosureItem />
-        <DisclosureItem />
-        <DisclosureItem />
-        <DisclosureItem />
-        <DisclosureItem />
-        <DisclosureItem />
+
 
 
       </section>

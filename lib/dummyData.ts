@@ -189,7 +189,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "005930",
       secName: "삼성전자 주식",
-      categoryId: "100",
+      categoryId: "010301",
     },
     analysisDetails: {
       topicKor: "투자 발표",
@@ -205,7 +205,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "005380",
       secName: "현대자동차 주식",
-      categoryId: "200",
+      categoryId: "010303",
     },
     analysisDetails: {
       topicKor: "재무 결과 발표",
@@ -221,7 +221,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "000660",
       secName: "SK하이닉스 주식",
-      categoryId: "300",
+      categoryId: "010305",
     },
     analysisDetails: {
       topicKor: "인수 합병",
@@ -237,7 +237,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "066570",
       secName: "LG전자 주식",
-      categoryId: "400",
+      categoryId: "010307",
     },
     analysisDetails: {
       topicKor: "배당 발표",
@@ -253,7 +253,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "035420",
       secName: "NAVER 주식",
-      categoryId: "500",
+      categoryId: "0102",
     },
     analysisDetails: {
       topicKor: "신제품 출시",
@@ -269,7 +269,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "035720",
       secName: "카카오 주식",
-      categoryId: "600",
+      categoryId: "0111",
     },
     analysisDetails: {
       topicKor: "사업 확장",
@@ -285,7 +285,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "005490",
       secName: "POSCO 주식",
-      categoryId: "700",
+      categoryId: "0111",
     },
     analysisDetails: {
       topicKor: "시장 전략",
@@ -301,7 +301,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "105560",
       secName: "KB금융 주식",
-      categoryId: "800",
+      categoryId: "010301",
     },
     analysisDetails: {
       topicKor: "주식 발행",
@@ -317,7 +317,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "068270",
       secName: "셀트리온 주식",
-      categoryId: "900",
+      categoryId: "0115",
     },
     analysisDetails: {
       topicKor: "재무 분석",
@@ -333,7 +333,7 @@ export const dummyDisclosures = [
     details: {
       secCode: "015760",
       secName: "한국전력공사 주식",
-      categoryId: "1000",
+      categoryId: "0102",
     },
     analysisDetails: {
       topicKor: "시장 보고서",
