@@ -26,7 +26,7 @@ import { getKorCategoryId } from "./utils";
         ]
 */
 
-export const getDisClosureData = async (req: any) => {
+export const getDisClosureData = async (pageParam : any , queryParameters: any) => {
   /* req 데이터 예시 
         {
         "startDate": "2022-01-01",
@@ -34,12 +34,16 @@ export const getDisClosureData = async (req: any) => {
         "exchangeType": "심천",
         "page": 0 } 
     */
-  const { page = 0, exchangeType, startDate, endDate } = req;
-  console.log("-------- getDisClosureData -----------");
-  // console.log("page : ", page);
-  // console.log("exchangeType : ", exchangeType);
-  // console.log("startDate : ", startDate);
-  // console.log("endDate : ", endDate);
+   console.log("-------- getDisClosureData -----------");
+  console.log("pageParam : ", pageParam);
+  const { exchangeType, startDate, endDate } = queryParameters;
+  const page = pageParam
+
+
+  console.log("page : ", page);
+  console.log("exchangeType : ", exchangeType);
+  console.log("startDate : ", startDate);
+  console.log("endDate : ", endDate);
 
   // console.log("dummyDisclosures : ", dummyDisclosures);
   /* [{
@@ -64,21 +68,25 @@ export const getDisClosureData = async (req: any) => {
   
 
   const PAGE_SIZE = 2;
-  const startIndex = page * PAGE_SIZE;
+  const startIndex = 0;
   const endIndex = page * PAGE_SIZE + PAGE_SIZE;
 
   
   // 시작일과 종료일을 Date 객체로 변환
   // [input] startDate, endDate 이 문자열로 들어오나❓❓❓
-  const startCriteria = new Date(startDate);
-  const endCriteria = new Date(endDate);
+
+  /*  날짜의 형식은 "2024-05-01T22:52:00"과 같이 ISO 8601 형식을 따름 
+      시간 정보가 없으면 - 임의로 넣어줌
+  */
+  const startCriteria = new Date(startDate + "T00:00:00");
+  const endCriteria = new Date(endDate + "T23:59:59");
   // console.log("날짜 type 체크 : ", typeof(startCriteria) , typeof(endCriteria)) // object, object
   // console.log("startCriteria & endCriteria : ", startCriteria , endCriteria);
 
 
   // startDate 와 endDate 에 맞는 dataDate 필터링
   filteredDisclosure = filteredDisclosure.filter((item) => {
-    const itemDate = new Date(item.dataDate);
+    const itemDate = new Date(item.dataDate);  // 
     return itemDate >= startCriteria && itemDate <= endCriteria;
   });
   console.log("dateDate 필터링 완료1️⃣ : ", filteredDisclosure) //🔵작동 📛 실제 calendar 에서 날짜 넘기면 애매함
@@ -110,8 +118,35 @@ export const getDisClosureData = async (req: any) => {
   });
   console.log("categoryId 변환 완료된 closure 3️⃣ : ", filteredDisclosure);
   
+  // filteredDisclosure 이 객체에 nextCursor 키를 추가하려면? 📛📛📛 4
+    // 만약, 부정적인거면, 안되는거면 -1 을 반환!!! 
+  const nextCursor = filteredDisclosure.length === PAGE_SIZE ? page + 1 : -1;
+  
+  // filteredDisclosure 객체에 추가하기
+  filteredDisclosure = filteredDisclosure.map((item) => {
+    return {
+      ...item,
+      nextCursor: nextCursor,
+    };
+  });
+
+
 
   // useInfiniteQuery 에서 사용할 수 있게, page 정보를 추가해서 return 해야? 📛📛📛📛📛
+  // filteredDisclosure = {
+  //   pageParams: [page],
+  //   pages: filteredDisclosure,
+  // };
+  // }
+  
+  // filteredDisclosure 이 객체에 nextCursor 키를 추가하려면? 📛📛📛  
+  // const nextCursor = filteredDisclosure.length === PAGE_SIZE ? page + 1 : null;
+  // console.log("nextCursor 4️⃣: ", nextCursor);
 
-  return filteredDisclosure;
+  return filteredDisclosure
+
+  // return {
+  //   pageParams: [nextCursor],
+  //   pages: filteredDisclosure,
+  // };
 };

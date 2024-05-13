@@ -184,7 +184,7 @@ export const dummyCategoryIdObj = {
 export const dummyDisclosures = [
   {
     id: 0,
-    dataDate: "2024-05-01",
+    dataDate: "2024-05-01T22:52:00",
     korName: "삼성전자",
     details: {
       secCode: "005930",
@@ -200,7 +200,7 @@ export const dummyDisclosures = [
   },
   {
     id: 1,
-    dataDate: "2024-05-02",
+    dataDate: "2024-05-02T22:52:00",
     korName: "현대자동차",
     details: {
       secCode: "005380",
@@ -216,7 +216,7 @@ export const dummyDisclosures = [
   },
   {
     id: 2,
-    dataDate: "2024-05-03",
+    dataDate: "2024-05-03T22:52:00",
     korName: "SK하이닉스",
     details: {
       secCode: "000660",
@@ -232,7 +232,7 @@ export const dummyDisclosures = [
   },
   {
     id: 3,
-    dataDate: "2024-05-04",
+    dataDate: "2024-05-04T22:52:00",
     korName: "LG전자",
     details: {
       secCode: "066570",
@@ -248,8 +248,7 @@ export const dummyDisclosures = [
   },
   {
     id: 4,
-    dataDate: "2024-05-05",
-    korName: "NAVER",
+    dataDate: "2024-05-05T22:52:00",
     details: {
       secCode: "035420",
       secName: "NAVER 주식",
@@ -264,7 +263,7 @@ export const dummyDisclosures = [
   },
   {
     id: 5,
-    dataDate: "2024-05-06",
+    dataDate: "2024-05-06T22:52:00",
     korName: "카카오",
     details: {
       secCode: "035720",
@@ -280,7 +279,7 @@ export const dummyDisclosures = [
   },
   {
     id: 6,
-    dataDate: "2024-05-07",
+    dataDate: "2024-05-07T22:52:00",
     korName: "POSCO",
     details: {
       secCode: "005490",
@@ -296,7 +295,7 @@ export const dummyDisclosures = [
   },
   {
     id: 7,
-    dataDate: "2024-05-08",
+    dataDate: "2024-05-08T22:52:00",
     korName: "KB금융",
     details: {
       secCode: "105560",
@@ -312,7 +311,7 @@ export const dummyDisclosures = [
   },
   {
     id: 8,
-    dataDate: "2024-05-09",
+    dataDate: "2024-05-09T22:52:00",
     korName: "셀트리온",
     details: {
       secCode: "068270",
@@ -328,7 +327,7 @@ export const dummyDisclosures = [
   },
   {
     id: 9,
-    dataDate: "2024-05-10",
+    dataDate: "2024-05-10T22:52:00",
     korName: "한국전력공사",
     details: {
       secCode: "015760",

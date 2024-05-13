@@ -7,7 +7,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import FilterCondition from "@/app/(site)/components/FilterCondition";
 import { is } from "date-fns/locale";
 import { Concert_One } from "next/font/google";
-import { getDisClosureData } from "@/lib/dummyBackend";
 
 const Contents = () => {
   const observer = useRef<IntersectionObserver | null>(null);; // Intersection Observer 인스턴스를 저장할 ref
@@ -24,17 +23,6 @@ const Contents = () => {
     pages: [], // 초기 페이지 데이터 배열 (#📛꼭필요?)
   });
 
-  const fetchDisClosureData = async ({ pageParam }: any) => {
-    console.log("pageParam💎💎", pageParam)
-    console.log("queryParameters💎💎", queryParameters)
-
-    const closureData = await getDisClosureData(pageParam, queryParameters)
-    console.log("closureData📌", closureData)
-
-    return closureData; // 아... closureData 가 useInfiniteQuery 를 한번 거쳐서 다른건가
-  };
-
-
   const {
     data,
     error,
@@ -44,22 +32,35 @@ const Contents = () => {
     status,
   } = useInfiniteQuery({
     queryKey: ["getClosureData", queryParameters],
-    queryFn: fetchDisClosureData,
+    queryFn: async ({ pageParam = 0 }) =>
+      fetchDisClosureData({
+        ...queryParameters,
+        // cursor: pageParam // 이렇게 gpt 가 안내 했는데, page 로 해야 백엔드랑 맞음 📛📛📛
+        page: pageParam,
+      }),
     // getNextPageParam: (lastPage, pages) => lastPage.pageParams[0] + 1, // 출처 : https://velog.io/@cnsrn1874/react-query-useInfiniteQuery
-    getNextPageParam: (lastPage, pages) => {  
-      return lastPage.nextCursor === -1 ? undefined : lastPage.nextCursor;
-    
-    },
-    //[이게 진짜⭐⭐⭐] https://velog.io/@bnb8419/React-Query-%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%A0%95%EB%A6%AC#getnextpageparam-getpreviouspageparam
-      
-    initialPageParam: 0 // react-query V5 이후 추가된 옵션✅
+      getNextPageParam: (lastPage, pages) => lastPage.nextCursor, // https://velog.io/@bnb8419/React-Query-%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%A0%95%EB%A6%AC#getnextpageparam-getpreviouspageparam
+
+
+    // getNextPageParam: (lastPage) => lastPage?.pageParams[0] + 1 , // 반환객체가 page 값이 한개만 나옴??
+    /* 페이지 2를 했을 때, 예상되는 반환객체가 
+        {
+          data = {
+            pageParams : [0,1],
+            pages : [{data0},{data1}]
+          } 이거라면 -> 뒤로 가기, 페이지 기억, 등을 할 수 있지 않을까
+      */
+
+    initialPageParam: undefined, // react-query V5 이후 추가된 옵션✅
   });
 
   useEffect(() => {
-    console.log("1️⃣ queryFn 에서 바로 찍힘 data 📌📌 : ", data);
-    console.log("1️⃣ queryFn 에서 바로 찍힘 data?.pages 📌📌 : ", data?.pages);
+    console.log("1️⃣ queryFn 에서 바로 찍힘 data 🙏🙏 : ", data);
+    console.log("1️⃣ queryFn 에서 바로 찍힘 data?.pages 🙏🙏 : ", data?.pages);
   }),
     [data];
+  // console.log("data ✅ : ", data);
+  // console.log("data ✅ : ", typeof data);
 
 
   // 마지막 요소 관찰 시킬지 말지를 판단 -> 관찰여부 결정
