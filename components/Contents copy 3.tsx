@@ -2,24 +2,23 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import ListView from "@/app/(site)/components/ListView";
+import { fetchDisClosureData } from "@/api/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import FilterCondition from "@/app/(site)/components/FilterCondition";
+import { is } from "date-fns/locale";
+import { Concert_One } from "next/font/google";
 import { getDisClosureData } from "@/lib/dummyBackend";
-import InfiniteScroll from "react-infinite-scroller";
-import DisclosureItem from "@/app/(site)/components/DisclosureItem";
-// yarn add react-infinite-scroller
-// yarn add --dev @types/react-infinite-scroller // ⭐ 타입 설치 필수
-
-interface Details {
-  secCode: string;
-  secName: string;
-  categoryId: string;
-}
 
 interface AnalysisDetails {
   topicKor: string;
   summarizeTinyKor: string;
   summarizeLongKor: string;
+}
+
+interface Details {
+  secCode: string;
+  secName: string;
+  categoryId: string;
 }
 
 interface ClosureDataItem {
@@ -28,11 +27,7 @@ interface ClosureDataItem {
   korName?: string;
   details: Details;
   analysisDetails: AnalysisDetails;
-}
-
-interface ClosureDataResponse {
-  nextCursor: number;
-  pages: ClosureDataItem[];
+  nextCursor?: number; // nextCursor 속성 추가
 }
 
 const Contents = () => {
@@ -43,8 +38,8 @@ const Contents = () => {
 
   // 📛 default 값 설정 이슈 | 📛 넘길 때도 왜 이렇게
   const [queryParameters, setQueryParameters] = useState({
-    startDate: "2024-05-02",
-    endDate: "2024-05-03",
+    startDate: "2024-05-01",
+    endDate: "2024-05-06",
     exchangeType: "심천",
     pageParams: [], // 초기 페이지 매개변수 배열 (#📛꼭필요?)
     pages: [], // 초기 페이지 데이터 배열 (#📛꼭필요?)
@@ -52,7 +47,7 @@ const Contents = () => {
 
   const fetchDisClosureData = async ({
     pageParam,
-  }: any): Promise<ClosureDataResponse> => {
+  }: any): Promise<ClosureDataItem[]> => {
     console.log("---------------fetchDisClosureData ---------------");
     console.log("@fetchDisClosureData pageParam💎💎", pageParam);
     console.log("@fetchDisClosureData queryParameters💎💎", queryParameters);
@@ -60,7 +55,8 @@ const Contents = () => {
     const closureData = await getDisClosureData(pageParam, queryParameters);
     console.log("closureData📌", closureData);
 
-    return closureData;
+
+    return closureData; 
   };
 
   const {
@@ -71,21 +67,21 @@ const Contents = () => {
     hasNextPage,
     isFetchingNextPage,
     status,
-    isFetching,
   } = useInfiniteQuery({
     queryKey: ["getClosureData", queryParameters],
-    queryFn: ({ pageParam }) => fetchDisClosureData({ pageParam }),
+    queryFn: ({pageParam}) => fetchDisClosureData({pageParam})  ,
     // getNextPageParam: (lastPage, pages) => lastPage.pageParams[0] + 1, // 출처 : https://velog.io/@cnsrn1874/react-query-useInfiniteQuery
 
     // 다음 페이지를 return 해야 함. 다음 페이지는 백엔드에서 담고 넘겨줘야만 함. 그러면, 여기에 담은게 fetchDisClosureData 의 pageParam 으로 넘어감
-    getNextPageParam: (lastPage, allpages) => {
+    getNextPageParam: (lastPage) => {
       console.log(
         "------------- Contents 컴포넌트 | getNextPageParam() ------------------"
       );
-      console.log("lastPage📚📚", lastPage);
-      console.log("allpages📚📚", allpages);
 
-      const nextCursor = lastPage?.nextCursor;
+      console.log("lastPage📚📚", lastPage);
+
+
+      const nextCursor = lastPage[0]?.nextCursor;
       console.log("nextCursor :", nextCursor);
 
       // ✅✅✅ 여기를 이렇게 변경하니까, 다음 페이지가 왔어
@@ -105,7 +101,7 @@ const Contents = () => {
     console.log("1️⃣ queryFn 에서 바로 찍힘 data?.pages 📌📌 : ", data?.pages);
     console.log("1️⃣ hasNextPage 📌📌 : ", hasNextPage); // 여기에서는 true 인데, 왜 밑에서는 false?
   }),
-    [data, hasNextPage];
+    [data , hasNextPage];
 
   // 마지막 요소 관찰 시킬지 말지를 판단 -> 관찰여부 결정
   useEffect(() => {
@@ -125,7 +121,7 @@ const Contents = () => {
       return; // 다음 페이지를 가져오는 중(isFetchingNextPage)이거나 다음 페이지가 없다(!hasNextPage)면 아무것도 하지 않음
 
     if (currentElement) {
-      console.log("currentElement observer에 등록");
+      console.log("currentElement observer에 등록")
       currentObserver.observe(currentElement);
     }
 
@@ -141,28 +137,29 @@ const Contents = () => {
     console.log("⭐⭐⭐ 두번째 effect");
     console.log("hasNextPage 1 ", hasNextPage); // true 🔵🔵🔵
 
-    // 이 사이에 hasNextPage 가 false 가 되었고 -> useEffect 가 돌았고 -> 그래서 밑에 부분들이 전부 false 가 됨?
+
+    // 이 사이에 hasNextPage 가 false 가 되었고 -> useEffect 가 돌았고 -> 그래서 밑에 부분들이 전부 false 가 됨? 
 
     // IntersectionObserver 콜백 함수로 초기화
     observer.current = new IntersectionObserver(
       (entries) => {
         console.log("entries 3 ", entries);
         console.log("Observer triggered", entries[0].isIntersecting);
-        console.log("hasNextPage 2 ", hasNextPage); // false 📛📛📛📛📛
-
+        console.log("hasNextPage 2 ", hasNextPage); // false 📛📛📛📛📛 
+        
         // 마지막 요소가 화면에 보이고 있고 더 로드할 페이지가 있으면 다음 페이지 로드
         // if (entries[0].isIntersecting && hasNextPage) {
-        if (entries[0].isIntersecting && hasNextPage) {
-          console.log("hasNextPage 2-1  ", hasNextPage); // false📛📛📛📛📛
+          if (entries[0].isIntersecting && hasNextPage) {
+          console.log("hasNextPage 2-1  ", hasNextPage); // false📛📛📛📛📛 
           fetchNextPage();
         } else {
-          console.log("hasNextPage 2-2  ", hasNextPage); // false📛📛📛📛📛
+          console.log("hasNextPage 2-2  ", hasNextPage); // false📛📛📛📛📛 
         }
-        console.log("hasNextPage4", hasNextPage); // false 📛📛📛📛📛
+        console.log("hasNextPage4", hasNextPage); // false 📛📛📛📛📛 
       },
       { threshold: 0.1 } // 마지막 요소가 10% 보일 때 콜백 트리거
     );
-
+    
     console.log("hasNextPage5", hasNextPage); // true
 
     return () => {
@@ -199,61 +196,13 @@ const Contents = () => {
           </button>
         }
 
-        <FilterCondition
-          queryParameters={queryParameters}
-          setQueryParameters={setQueryParameters}
-        />
+        <FilterCondition />
 
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => {
-            if (!isFetching) fetchNextPage();
-          }}
-          hasMore={hasNextPage}
-          loader={
-            <div className="loader" key={0}>
-              Loading..
-            </div>
-          }
-        >
-          {/* <ListView disClosureData={data?.pages} /> */}
-          {/* <h1>hello</h1> */}
-          {/* 여기에 ListView 를 넣고 싶어 ⭐⭐⭐ */}
-          {data?.pages.map((page, pageIndex) => {
-            console.log("⭐InfiniteScroll 페이지 데이터", page);
-            return page.pages.map((item, itemIndex) => {
-              console.log("⭐InfiniteScroll 아이템 데이터", item);
-              // ⭐ 좀 못생겼지만, 이렇게 하면 데이터가 꽂힌다.
-              return (
-                <>
-                  <DisclosureItem item={item} />
-
-                  <div key={`${pageIndex}-${itemIndex}`}>
-                    <h1>{item.id}</h1>
-                    <h1>{item.dataDate}</h1>
-                    <h1>{item.korName}</h1>
-                    <h1>{item.details.secCode}</h1>
-                    <h1>{item.details.secName}</h1>
-                    <h1>{item.details.categoryId}</h1>
-                    <h1>{item.analysisDetails.topicKor}</h1>
-                    <h1>{item.analysisDetails.summarizeTinyKor}</h1>
-                    <h1>{item.analysisDetails.summarizeLongKor}</h1>
-                  </div>
-                </>
-              );
-            });
-          })}
-        </InfiniteScroll>
-        {/* 
         <ListView
           // disClosureData={data?.pages}
           disClosureData={data && data}
           lastElementRef={lastElementRef && lastElementRef}
-        /> */}
-
-        {/* ⭐ 마지막 요소를 참조하기 위한 div */}
-        {/* <div ref={lastElementRef} className="h-[100px] w-full bg-blue-300" /> */}
-
+        />
         {/* 여기 페이지가 변수로 업데이트 되어야 자동으로 바뀜 */}
         {/* <ListView disClosureData={data?.pages[1].pages} /> */}
       </div>

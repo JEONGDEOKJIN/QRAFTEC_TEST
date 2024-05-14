@@ -342,3 +342,36 @@ export const dummyDisclosures = [
     },
   },
 ];
+
+// lib/dummyData.ts
+export interface Item {
+  id: number;
+  title: string;
+  body: string;
+}
+
+export interface FetchItemsResponse {
+  data: Item[];
+  nextPage: number;
+  hasMore: boolean;
+}
+
+export const fetchItems = async (page = 0): Promise<FetchItemsResponse> => {
+  const itemsPerPage = 10;
+  const totalItems = 50;
+  const allItems = Array.from({ length: totalItems }, (_, index) => ({
+    id: index + 1,
+    title: `Item ${index + 1}`,
+    body: `This is the body of item ${index + 1}`,
+  }));
+
+  const start = page * itemsPerPage;
+  const end = start + itemsPerPage;
+  const data = allItems.slice(start, end);
+
+  return {
+    data,
+    nextPage: page + 1,
+    hasMore: end < totalItems,
+  };
+};

@@ -42,10 +42,10 @@ export const getDisClosureData = async (
   const { exchangeType, startDate, endDate } = queryParameters;
   const page = pageParam;
 
-  console.log("getDisClosureData page : ", page);
-  console.log("getDisClosureData exchangeType : ", exchangeType);
-  console.log("getDisClosureData startDate : ", startDate);
-  console.log("getDisClosureData endDate : ", endDate);
+  console.log("page : ", page);
+  console.log("exchangeType : ", exchangeType);
+  console.log("startDate : ", startDate);
+  console.log("endDate : ", endDate);
 
   // console.log("dummyDisclosures : ", dummyDisclosures);
   /* [{
@@ -92,24 +92,10 @@ export const getDisClosureData = async (
   console.log("1️⃣ dateDate 필터링 완료 : ", filteredDisclosure[0]); //🔵작동 📛 실제 calendar 에서 날짜 넘기면 애매함
   console.log("1️⃣ dateDate 필터링 완료 : ", filteredDisclosure[page]); //🔵작동 📛 실제 calendar 에서 날짜 넘기면 애매함
 
-  // const selectedDisclosure = filteredDisclosure[page];
-  // console.log("1️⃣ dateDate 필터링 완료 : ", selectedDisclosure); //🔵작동 📛 실제 calendar 에서 날짜 넘기면 애매함
+  const selectedDisclosure = filteredDisclosure[page];
+  console.log("1️⃣ dateDate 필터링 완료 : ", selectedDisclosure); //🔵작동 📛 실제 calendar 에서 날짜 넘기면 애매함
 
 
-  // const totalNum = filteredDisclosure.length 
-  // console.log("@totalNum : ", totalNum);
-  // console.log("page * PAGE_SIZE" , page * PAGE_SIZE)
-  
-  // const nextCursor = totalNum > ( page * PAGE_SIZE) ? page + 1 : -1;
-  // console.log("@nextCursor : ", nextCursor);
-  
-  
-  // 만약, 부정적인거면, 안되는거면 -1 을 반환!!! | 위치를 이곳에 놓아야, nextCursor 이 제대로 먹음 
-  const totalNum = filteredDisclosure.length;
-  const nextCursor = totalNum > endIndex ? page + 1 : -1;
-  console.log("@totalNum : ", totalNum);
-  console.log("page * PAGE_SIZE", page * PAGE_SIZE);
-  console.log("@nextCursor : ", nextCursor);
 
 
   // pageNation : 기준페이지보다 많을 때만 진행
@@ -138,29 +124,35 @@ export const getDisClosureData = async (
 
   // filteredDisclosure 이 객체에 nextCursor 키를 추가하려면? 📛📛📛 4
   // 만약, 부정적인거면, 안되는거면 -1 을 반환!!!
-  // const nextCursor = filteredDisclosure.length === PAGE_SIZE ? page + 1 : -1;
+  const nextCursor = filteredDisclosure.length === PAGE_SIZE ? page + 1 : -1;
 
   // filteredDisclosure 객체에 추가하기
-  // filteredDisclosure = filteredDisclosure.map((item) => {
-  //   return {
-  //     ...item,
-  //     nextCursor: nextCursor,
-  //   };
-  // });
+  filteredDisclosure = filteredDisclosure.map((item) => {
+    return {
+      ...item,
+      nextCursor: nextCursor,
+    };
+  });
 
-  
-  const finalObj = {
-    nextCursor: nextCursor,
-    pages: filteredDisclosure,
-  };
+  console.log("4️⃣ nextCursor 완료된 filteredDisclosure : ", filteredDisclosure);
 
-  console.log("📌lastPage 가 이렇게!? finalObj : ", finalObj);
+  // useInfiniteQuery 에서 사용할 수 있게, page 정보를 추가해서 return 해야? 📛📛📛📛📛
+  // filteredDisclosure = {
+  //   pageParams: [page],
+  //   pages: filteredDisclosure,
+  // };
+  // }
 
-  return finalObj;
-  /*
+  // filteredDisclosure 이 객체에 nextCursor 키를 추가하려면? 📛📛📛
+  // const nextCursor = filteredDisclosure.length === PAGE_SIZE ? page + 1 : null;
+  // console.log("nextCursor 4️⃣: ", nextCursor);
+
+  return filteredDisclosure;
+/*
   {
-
+    
     
   }
 */
+
 };

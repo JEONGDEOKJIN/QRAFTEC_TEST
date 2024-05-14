@@ -14,9 +14,18 @@ import {
 } from "@/components/ui/popover";
 import CalendarIconColored from "./elements/CalendarIconColored";
 
-export function DatePicker({ defaultValue }: any) {
-  const [date, setDate] = React.useState<Date>();
+export function DatePicker({ defaultValue , onChange}: any) {
+  // const [date, setDate] = React.useState<Date>();
+  const [date, setDate] = React.useState<Date | undefined>(defaultValue ? new Date(defaultValue) : undefined);
+  console.log("🔥DatePicker", date)  
 
+  const handleDateChange = (selectedDate: Date | undefined) => {
+    console.log("🔥handleDateChange", selectedDate)
+    setDate(selectedDate);
+    if (onChange) {
+      onChange(selectedDate);
+    }
+  };
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,7 +41,8 @@ export function DatePicker({ defaultValue }: any) {
             format(date, "PPP")
           ) : (
             <span className="font-[300] text-[14.5px] leading-[17.55px] text-[#5B6266] ">
-              {defaultValue}
+              {/* {defaultValue} ✅ 변경해줌 혹시 몰라서 */}
+              {date && date}
             </span>
           )}
 
@@ -47,7 +57,7 @@ export function DatePicker({ defaultValue }: any) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateChange}  // 여기가 왜 handleDateChange 이거 일까.  onChange 를 바로 쓰면 왜 안 되나❓❓❓
           initialFocus
         />
       </PopoverContent>

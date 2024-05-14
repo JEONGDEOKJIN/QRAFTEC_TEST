@@ -2,17 +2,45 @@ import React from "react";
 import DisclosureItem from "./DisclosureItem";
 
 const ListView = ({ disClosureData, lastElementRef }: any) => {
+  console.log("------------- ListView 컴포넌트 ------------------");
   console.log("2️⃣ @ListView | disClosureData : ", disClosureData);
-  // /  const currentPage = disClosureData?.length - 1;
-  // console.log("@currentPage ⭐⭐: ", currentPage);
+  console.log(
+    "2️⃣ @ListView | disClosureData?.[1] : ",
+    disClosureData?.pages && disClosureData?.pages
+  );
 
-  // const arrLength = disClosureData?[currentPage]?.pages?.length;
-  // const arrLength = disClosureData[0]?.length;
-  // console.log("2️⃣ @ListView | arrLength : ", arrLength);
+  // 현재 cursor 정보 가져오기
+  const pageParamsLength = disClosureData?.pageParams?.length || 0; // pageParams의 길이
+  const currentCursor = disClosureData?.pageParams?.[pageParamsLength - 1] || 0; // pageParams의 가장 끝값 가져옴
+  console.log("현재 currentCursor 정보 : ", currentCursor);
+
+  // 현재 page 가져오기
+  const currentPage = disClosureData?.pages?.[currentCursor] || [];
+  console.log("currentPage 보여줘야 하는 페이지 : ", currentPage);
+  console.log("lastElementRef ", lastElementRef);
 
   return (
     <>
-     <section className="h-[966px] overflow-y-scroll rounded-[3px] bg-[#FFFFFF] py-[10px] px-[14px] flex flex-col gap-[10px]">
+      <section className="h-[966px] overflow-y-scroll rounded-[3px] bg-[#FFFFFF] py-[10px] px-[14px] flex flex-col gap-[10px]">
+        {currentPage.pages?.map((item: any, itemIndex: number) => {
+          const isLastItem = itemIndex === currentPage.length - 1;
+          return (
+            <>
+              <DisclosureItem
+                // ref={isLastItem ? lastElementRef : null}
+                key={item.id}
+                disClosureData={item}
+              />
+              <div
+                ref={lastElementRef}
+                className="h-[100px] w-full bg-blue-300"
+              />
+            </>
+          );
+        })}
+      </section>
+
+      {/* <section className="h-[966px] overflow-y-scroll rounded-[3px] bg-[#FFFFFF] py-[10px] px-[14px] flex flex-col gap-[10px]">
       {disClosureData?.flatMap((page: any[], index: number, array: any[]) =>
         page.map((item: any, itemIndex: number) => {
           const isLastItem = index === array.length - 1 && itemIndex === page.length - 1; // Check if it's the last item in the last array
@@ -25,7 +53,7 @@ const ListView = ({ disClosureData, lastElementRef }: any) => {
           );
         })
       )}
-    </section>
+    </section> */}
 
       {/* <section className="h-[966px] overflow-y-scroll rounded-[3px] bg-[#FFFFFF] py-[10px] px-[14px] flex flex-col   gap-[10px]">
         {disClosureData &&
