@@ -105,6 +105,8 @@ const MobileContents = () => {
           }
           threshold={70}
         >
+
+          {/* ✅✅✅ sm : 모바일 반응형 작업한 부분 입니다 */}
           <section className="h-[966px]  sm: min-w-[375px] lg:max-w-[772px] overflow-y-auto rounded-[3px] bg-[#FFFFFF] py-[10px] px-[14px] flex flex-col gap-[10px]">
             {data?.pages.map((page, pageIndex) => {
               if (pageIndex === data.pages.length - 1) {

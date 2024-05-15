@@ -31,7 +31,7 @@ const SelectTrigger = React.forwardRef<
       
       {/* <ChevronDown className="h-4 w-4 opacity-50" /> 이렇게 스타일 수정할 수 있음 참고*/}
 
-      {/* #✅ custom 아이콘 */}
+      {/* #custom 아이콘 */}
       <DropdownArrow />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>

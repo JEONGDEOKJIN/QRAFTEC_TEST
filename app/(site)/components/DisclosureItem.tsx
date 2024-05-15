@@ -35,7 +35,7 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
   // item.dataDate 예외처리 및  날짜형식 변환
   let formattedDataDate = "default data";
   if (item?.dataDate) {
-    // ✅ dataDate가 존재하는지 확인
+
     try {
       formattedDataDate = format(
         new Date(item.dataDate),
@@ -43,7 +43,7 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
       );
     } catch (error) {
       console.error("부정확한 dataDate format:", item.dataDate);
-      formattedDataDate = "부정확한 date"; // ✅ 예외 발생 시 기본값 설정
+      formattedDataDate = "부정확한 date"; 
     }
   }
 
@@ -57,6 +57,7 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
   const formattedLocaltime = format(new Date(localtime), "yyyy/MM/dd HH:mm:ss");
 
   return (
+    // ✅✅✅ 모바일 반응형으로 작업한 부분 입니다. xsm(커스텀 설정), sm, lg 키워드를 사용하여 반응형을 구현했습니다.
     <div className=" flex flex-col gap-[10px]   lg:max-w-[744px] w-full rounded-[8px] border-[#CED9E1] border-[0.5px] py-[12px] px-[20px]">
       <section
         ref={ref}
@@ -101,7 +102,6 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
         </article>
       </section>
 
-      {/* ✅✅✅ 여기 section 을 하나 였다가, 2개로 분리시켰음 돌아가려면, ItemDescription 을 하나로 만들면 됨*/}
       <section className="xsm:hidden sm:hidden lg:flex flex-col gap-[20px] w-full max-w-[704px]  py-[12px] px-[20px]">
         <ItemDescription
           description={
@@ -140,7 +140,6 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
               ? item.dataDate.split("T")[0].replace(/-/g, "/")
               : "default Date"}
           </p>
-          {/* tracking-[0.24px] : Letter : 2% -> 12px 의 2% 로써, 0.24px 로 계산해서 적용 */}
 
           <p className="font-[500] text-[#A1A2AB] text-[12px] tracking-[0.24px] leading-[26.4px]">
             {item.dataDate
