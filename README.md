@@ -50,7 +50,7 @@
 | 조건 조회  | - `드롭다운 필터` 및 `달력 UI` 는 `Shadcn` 라이브러리 사용 <br>- 디자인 커스텀 후 `Interaction` 작업 수행                                                                                                                                 |
 | 목록 조회  | - 피그마 토대로 컴포넌트 제작 <br>- useInfiniteQuery 및 React-infinite-scroll 사용하여, 스크롤이 특정 ref 에 도착하면 -> loadMore 이벤트가 발생하여 -> 이벤트 핸들러로써 fetchNextPage 를 실행하여 목록 view data fetch<br>- `PAGE_SIZE` 를 설정하여 한번에 조회 되는 목록을 조절 |
 | 콘텐츠 구성 | - 기획 요건 및 피그마 요건 참고하여 제작                                                                                                                                                                                      |
-| 모바일 화면 | - Tailwind config.ts 에서 `screens` 를 `300px 미만` 으로 설정(`xsm`)하여 제작<br>- `MobileContens` 컴포넌트 , `DisclosureItem` 컴포넌트에서 주로 모바일 반응형 작업을 진행했습니다. <br>- 주석으로 `✅✅✅` 표시하여 설명해두었습니다.                                          |
+| 모바일 화면 | - Tailwind config.ts 에서 `screens` 를 `300px 미만` 으로 설정하여 제작<br>- `MobileContens` 컴포넌트 , `DisclosureItem` 컴포넌트에서 주로 모바일 반응형 작업을 진행했습니다. <br>- 주석으로 `✅✅✅` 표시하여 설명해두었습니다.                                          |
 |        |                                                                                                                                                                                                               |
   
   
@@ -58,6 +58,45 @@
   
   <br>
   <br>
+
+# 🟦 시연 
+
+<details>
+  <summary> 1. 조건 조회  </summary>
+
+![](https://i.imgur.com/OOjIVCF.gif)
+
+</details>
+
+
+<details>
+  <summary> 2. 목록 조회  </summary>
+
+
+![](https://i.imgur.com/n9KGbMH.gif)
+
+
+</details>
+
+
+<details>
+  <summary> 3. 모바일 화면  </summary>
+
+![](https://i.imgur.com/MpvxdIg.png)
+
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
 
 
 # 🟦 프로젝트 시작하기 
