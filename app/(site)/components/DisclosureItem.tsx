@@ -31,7 +31,6 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
   item,
   ref,
 }) => {
-  console.log("🔥🔥🔥 DisclosureItem item", item);
 
   // item.dataDate 예외처리 및  날짜형식 변환
   let formattedDataDate = "default data";

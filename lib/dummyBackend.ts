@@ -83,11 +83,10 @@ export const getDisClosureData = async (
       item.details.categoryId
     );
     return {
-      ...item, // 원본 배열을 수정하지 않도록, spread 연산자 사용
+      ...item,
       details: {
         ...item.details,
         categoryId: korCategoryId,
-        // fileLink: item.details.fileLink || "", // 기본값 설정
       },
     };
   });
@@ -96,8 +95,6 @@ export const getDisClosureData = async (
     nextCursor: nextCursor,
     pages: filteredDisclosure,
   };
-
-  console.log("📌lastPage 가 이렇게!? finalObj : ", finalObj);
 
   return finalObj;
 };

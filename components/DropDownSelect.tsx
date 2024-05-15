@@ -10,7 +10,6 @@ import React from "react";
 
 const DropDownSelect = ({ defaultValue, onSelect }: any) => {
   const handleSelectChange = (value: string) => {
-    console.log("🙏🙏 DropDownSelect", value);
     onSelect(value);
   };
 

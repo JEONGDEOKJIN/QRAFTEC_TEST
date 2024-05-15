@@ -76,7 +76,7 @@ const config = {
         'buttonSmall': '0px 0px 4px 0px rgba(0, 0, 0, 0.05)'
       },
       screens: {
-        'xsm': '300px', // Custom screen size for 300px
+        'xsm': '300px', // 반응형 300px 이하 컨트롤
       },
     },
   },

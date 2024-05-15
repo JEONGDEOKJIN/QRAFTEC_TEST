@@ -12,12 +12,9 @@ const FilterCondition = ({ queryParameters, setQueryParameters }: any) => {
   );
   const [currentEndDate, setCurrentEndDate] = useState(queryParameters.endDate);
 
-  console.log(
-    "------------------------FilterCondition------------------------"
-  );
+
 
   const handleStartDateChange = (date: any) => {
-    console.log("✅handleStartDateChange", date);
 
     const newStartDate = date ? new Date(date) : null;
     const endDate = queryParameters.endDate
@@ -40,7 +37,6 @@ const FilterCondition = ({ queryParameters, setQueryParameters }: any) => {
   };
 
   const handleEndDateChange = (date: any) => {
-    console.log("✅handleEndDateChange", date);
 
     const newEndDate = date ? new Date(date) : null;
     const startDate = queryParameters.startDate
@@ -82,9 +78,7 @@ const FilterCondition = ({ queryParameters, setQueryParameters }: any) => {
           />
         </div>
 
-        {/* 시작일 picker 와 종료일 picker 가 필요 | props 로 이름만 다르게 해서 전달 
-            ✅ 현재, dummyData 임 주의!!! 📛📛📛
-        */}
+
         <div className="w-full max-w-[344px] h-[44px] py-[4px] px-[12px] gap-[10px] flex flex-row  items-center justify-center ">
           {/* 여기에 currentValue 가져와야 겠다 */}
           <DatePicker
