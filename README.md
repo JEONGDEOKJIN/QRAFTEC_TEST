@@ -4,11 +4,7 @@
 - [과제 목표] 해외공시번역 AI 컨텐츠의 목록 표시 화면을 개발
 - [요건] 기획요건, 디자인 요건 및 기존 개발 요건 반영하여 신규화면 개발
 
-
-<br>
-
-<br>
-
+<br><br>
 
 # 🟦 주요 요건 (요구 사항)
 
@@ -34,8 +30,7 @@
 | 개발팀 요건 | 스택        |          | Next.js, Typescript, Tailwind, Shadcn, React-Query 사용             |
 | 추가 과제   |             |          | 모바일 반응형 제작                                                  |
 
-<br>
-<br>
+<br><br>
 
 # 🟦 주요 기술 과제 
 
@@ -53,55 +48,43 @@
 | 모바일 화면 | - Tailwind config.ts 에서 `screens` 를 `300px 미만` 으로 설정하여 제작<br>- `MobileContens` 컴포넌트 , `DisclosureItem` 컴포넌트에서 주로 모바일 반응형 작업을 진행했습니다. <br>- 주석으로 `✅✅✅` 표시하여 설명해두었습니다.                                          |
 |        |                                                                                                                                                                                                               |
   
-  
-  
-  
-  <br>
-  <br>
+<br><br>
 
 # 🟦 시연 
 
 <details>
   <summary> 1. 조건 조회  </summary>
 
-![](https://i.imgur.com/OOjIVCF.gif)
+
+
+![조건조회](https://i.imgur.com/7jYzD0J.png)(https://youtu.be/5uHmTbK1HbA)
+
+
+
+
 
 </details>
-
 
 <details>
   <summary> 2. 목록 조회  </summary>
 
+![목록 조회](https://i.imgur.com/zblYDK8.png)(https://youtu.be/zhgtRtnNCQc)
 
-![](https://i.imgur.com/n9KGbMH.gif)
 
 
 </details>
-
 
 <details>
   <summary> 3. 모바일 화면  </summary>
 
-![](https://i.imgur.com/MpvxdIg.png)
-
-
+<img src="https://i.imgur.com/MpvxdIg.png" alt="모바일 화면" width="500">
 
 </details>
-
-
-
-
-
-
-
-
-
-
-
+  
+<br><br>
 
 # 🟦 프로젝트 시작하기 
-``` BASH
+```bash
 # QRAFTEC_TEST/ai-content 디렉토리에서 
 yarn install    # 의존성 설치
 yarn dev    # 프로젝트 시작
-```
