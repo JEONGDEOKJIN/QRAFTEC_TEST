@@ -74,7 +74,10 @@ const config = {
       },
       boxShadow : {
         'buttonSmall': '0px 0px 4px 0px rgba(0, 0, 0, 0.05)'
-      }
+      },
+      screens: {
+        'xsm': '300px', // Custom screen size for 300px
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

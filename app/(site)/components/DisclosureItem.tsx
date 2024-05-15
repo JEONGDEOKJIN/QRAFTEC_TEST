@@ -58,13 +58,13 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
   const formattedLocaltime = format(new Date(localtime), "yyyy/MM/dd HH:mm:ss");
 
   return (
-    <div className="flex flex-col gap-[10px] max-w-[744px] w-full rounded-[8px] border-[#CED9E1] border-[0.5px] py-[12px] px-[20px]">
+    <div className=" flex flex-col gap-[10px]   lg:max-w-[744px] w-full rounded-[8px] border-[#CED9E1] border-[0.5px] py-[12px] px-[20px]">
       <section
         ref={ref}
-        className="flex justify-between max-x-[704px] w-full h-[131px] py-[12px] px-[20px] bg-[#FFFFFF]"
+        className=" xsm:hidden lg:flex justify-between max-x-[704px] w-full h-[131px] py-[12px] px-[20px] bg-[#FFFFFF]"
       >
-        <article className="flex flex-col gap-[20px] w-[174px] h-[107px] py-[12px]">
-          <div className="w-[174px] h-[31px] text-[#68696B]">
+        <article className="xsm:hidden sm:hidden lg:flex flex-col gap-[20px] w-[174px] h-[107px] py-[12px]">
+          <div className="w-[174px] h-[31px]  text-[#68696B]">
             <MetaDataTime
               criteria="공시일"
               time={formattedDataDate}
@@ -74,6 +74,7 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
               criteria="현지시간"
               time={formattedLocaltime || "default formattedLocaltime"}
             />
+
             <MetaDataCompany
               companyID={item?.details.secCode || "default secCode"}
               companyNameKOR={item?.korName || "default korName "}
@@ -84,7 +85,7 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
           </div>
         </article>
 
-        <article className="flex flex-col gap-[14px] w-[395.93px] h-[78px] p-[4px] bg-[#FFFFFF]">
+        <article className="xsm:hidden sm:hidden  lg:flex flex-col gap-[14px] w-[395.93px] h-[78px] p-[4px] bg-[#FFFFFF]">
           <div className="flex flex-row gap-[12px] w-[387.93px] h-[30px]">
             {item?.analysisDetails?.topicKor?.map((item, index) => {
               return (
@@ -101,17 +102,53 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
         </article>
       </section>
 
-      <section className="flex flex-col gap-[20px] w-full max-w-[704px]  py-[12px] px-[20px]">
+      {/* ✅✅✅ 여기 section 을 하나 였다가, 2개로 분리시켰음 돌아가려면, ItemDescription 을 하나로 만들면 됨*/}
+      <section className="xsm:hidden sm:hidden lg:flex flex-col gap-[20px] w-full max-w-[704px]  py-[12px] px-[20px]">
         <ItemDescription
           description={
             item?.analysisDetails.summarizeTinyKor || "default summarizeTinyKor"
           }
         />
+      </section>
+      <section className=" flex flex-col gap-[20px] w-full max-w-[704px]  py-[12px] px-[20px]">
+        <article className="  xsm:flex xsm:flex-row xsm:gap-3    xsm:w-full xsm:h-[30px] lg:hidden ">
+          <h3 className="text-[#FFFFFF] font-[500] text-[13px] leading-[15.51px] bg-[#758A8A] rounded-[40px] py-[8px] px-[10px]">
+            {item.details.categoryId}
+          </h3>
+
+          <div className="flex flex-row">
+            {item.analysisDetails.topicKor?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="ml-1 font-[700] text-[12px] leading-[14.32px] text-[#002C2CB2] flex items-center"
+                >
+                  <span>#</span>
+                  <span className="ml-1">{item}</span>
+                </div>
+              );
+            })}
+          </div>
+        </article>
         <ItemDescription
           description={
             item?.analysisDetails.summarizeLongKor || "default summarizeLongKor"
           }
         />
+        <article className="  xsm:flex xsm:flex-row xsm:gap-3    xsm:w-full xsm:h-[30px] lg:hidden ">
+          <p className="font-[500] text-[#A1A2AB] text-[12px] tracking-[0.24px] leading-[26.4px] ">
+            {item.dataDate
+              ? item.dataDate.split("T")[0].replace(/-/g, "/")
+              : "default Date"}
+          </p>
+          {/* tracking-[0.24px] : Letter : 2% -> 12px 의 2% 로써, 0.24px 로 계산해서 적용 */}
+
+          <p className="font-[500] text-[#A1A2AB] text-[12px] tracking-[0.24px] leading-[26.4px]">
+            {item.dataDate
+              ? item.dataDate.split("T")[1].replace(/-/g, "/").split("Z")[0]
+              : "default Date"}
+          </p>
+        </article>
       </section>
     </div>
   );

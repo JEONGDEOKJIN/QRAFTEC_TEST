@@ -71,9 +71,9 @@ const FilterCondition = ({ queryParameters, setQueryParameters }: any) => {
 
   return (
     <>
-      <section className="flex flex-row justify-start items-center gap-[20px] px-[12px] bg-[#FFFFFF] rounded-[3px]  h-[48px]">
-        <div className="w-full max-w-[238px] h-[40px] flex flex-row items-center justify-center gap-[12px] py-[4px] px-[12px] ">
-          <h3 className="font-[600] text-[15px] w-full max-w-[45px] h-[18px]">
+      <section className="xsm:hidden sm:hidden  lg:flex flex-row justify-start items-center gap-[20px] px-[12px] bg-[#FFFFFF] rounded-[3px]  h-[48px]">
+        <div className=" w-full max-w-[238px] h-[40px] flex flex-row items-center justify-center gap-[12px] py-[4px] px-[12px] ">
+          <h3 className=" font-[600] text-[15px] w-full max-w-[45px] h-[18px]">
             거래소
           </h3>
           <DropDownSelect
@@ -93,7 +93,6 @@ const FilterCondition = ({ queryParameters, setQueryParameters }: any) => {
             }
             onChange={handleStartDateChange}
             maxDate={new Date(queryParameters.endDate)} // 선택 가능한 최대 시작일
-
           />
           <ArrowSmall />
           <DatePicker
