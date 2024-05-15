@@ -4,7 +4,7 @@ import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn, disabledDates } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -14,13 +14,15 @@ import {
 } from "@/components/ui/popover";
 import CalendarIconColored from "./elements/CalendarIconColored";
 
-export function DatePicker({ defaultValue , onChange}: any) {
+export function DatePicker({ defaultValue, onChange, minDate, maxDate }: any) {
   // const [date, setDate] = React.useState<Date>();
-  const [date, setDate] = React.useState<Date | undefined>(defaultValue ? new Date(defaultValue) : undefined);
-  console.log("🔥DatePicker", date)  
+  const [date, setDate] = React.useState<Date | undefined>(
+    defaultValue ? new Date(defaultValue) : undefined
+  );
+  console.log("🔥DatePicker", date);
 
   const handleDateChange = (selectedDate: Date | undefined) => {
-    console.log("🔥handleDateChange", selectedDate)
+    console.log("🔥handleDateChange", selectedDate);
     setDate(selectedDate);
     if (onChange) {
       onChange(selectedDate);
@@ -38,16 +40,17 @@ export function DatePicker({ defaultValue , onChange}: any) {
           )}
         >
           {date ? (
-            format(date, "PPP")
+            format(date, "yyyy-MM-dd")  // 날짜 형식 변경
           ) : (
             <span className="font-[300] text-[14.5px] leading-[17.55px] text-[#5B6266] ">
               {/* {defaultValue} ✅ 변경해줌 혹시 몰라서 */}
               {date && date}
+              
             </span>
           )}
 
-            {/* #커스텀  */}
-            <CalendarIconColored />
+          {/* #커스텀  */}
+          <CalendarIconColored />
 
           {/* 스타일 변경 참고용  */}
           {/* <CalendarIcon className="mr-2 h-4 w-4 shrink-0 " /> */}
@@ -57,8 +60,9 @@ export function DatePicker({ defaultValue , onChange}: any) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={handleDateChange}  // 여기가 왜 handleDateChange 이거 일까.  onChange 를 바로 쓰면 왜 안 되나❓❓❓
+          onSelect={handleDateChange} // 여기가 왜 handleDateChange 이거 일까.  onChange 를 바로 쓰면 왜 안 되나❓❓❓
           initialFocus
+          disabled={(date) => disabledDates(date, minDate, maxDate)} // 시작일, 종료일에 따른 disabled 비교
         />
       </PopoverContent>
     </Popover>

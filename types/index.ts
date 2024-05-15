@@ -25,13 +25,47 @@
 // }
 
 
+// ---------------------
+
+
+
+// interface Details {
+//   secCode: string[];
+//   secName: string[];
+//   categoryId: string;
+//   fileLink?: string; // fileLink 필드 추가
+// }
+
+// interface AnalysisDetails {
+//   topicKor: string;
+//   summarizeTinyKor: string;
+//   summarizeLongKor: string;
+// }
+
+// export interface Disclosure {
+//   id: string;
+//   dataDate: string;
+//   korName: string;
+//   details: Details;
+//   analysisDetails: AnalysisDetails;
+// }
 
 
 
 
 
 
-// 새로운 타입 
+
+
+
+
+// -----------------------
+
+export type ExchangeType = "심천" | "홍콩";
+
+
+
+// 새로운 타입 시도
 interface Details {
   secCode: string;
   secName: string;
@@ -56,6 +90,8 @@ export default  interface ClosureDataResponse {
   nextCursor: number;
   pages: ClosureDataItem[];
 }
+
+
 
 
 // declare module 'react-infinite-scroller' {
