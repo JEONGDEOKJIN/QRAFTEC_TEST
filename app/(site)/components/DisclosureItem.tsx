@@ -7,11 +7,6 @@ import { getHongKongLocalTime, getShenzhenLocalTime } from "@/lib/utils";
 import React, { forwardRef } from "react";
 import { format } from "date-fns";
 
-// interface DisclosureItemProps {
-//   disClosureData: any; //
-//   key: number;
-// }
-
 interface DisclosureItemProps {
   item: {
     dataDate?: string;
@@ -22,20 +17,20 @@ interface DisclosureItemProps {
       categoryId: string;
     };
     analysisDetails: {
-      topicKor?: string;
+      topicKor?: string[];
       summarizeTinyKor?: string;
       summarizeLongKor?: string;
     };
   };
   queryParameters: any;
+  ref : any;
 }
 
-// const DisclosureItem = forwardRef<HTMLDivElement, DisclosureItemProps>((props, ref) => {
 const DisclosureItem: React.FC<DisclosureItemProps> = ({
   queryParameters,
   item,
+  ref,
 }) => {
-
   console.log("🔥🔥🔥 DisclosureItem item", item);
 
   // item.dataDate 예외처리 및  날짜형식 변환
@@ -55,9 +50,7 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
 
   // 현지시간 가져오기
   const HONGKONG_LOCALTIME = getHongKongLocalTime();
-  // alert(`HONGKONG_LOCALTIME : ${HONGKONG_LOCALTIME}`)
   const SHENZHEN_LOCALTIME = getShenzhenLocalTime();
-  // alert(`SHENZHEN_LOCALTIME : ${SHENZHEN_LOCALTIME}`)
   const localtime =
     queryParameters.exchangeType === "홍콩"
       ? HONGKONG_LOCALTIME
@@ -65,8 +58,10 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
   const formattedLocaltime = format(new Date(localtime), "yyyy/MM/dd HH:mm:ss");
 
   return (
-    // <div className="flex flex-col gap-[10px] max-w-[744px] w-full h-[412px] rounded-[8px] border-[#CED9E1] border-[0.5px] py-[12px] px-[20px]">
-    <div className="flex flex-col gap-[10px] max-w-[744px] w-full rounded-[8px] border-[#CED9E1] border-[0.5px] py-[12px] px-[20px]">
+    <div
+      ref={ref}
+      className="flex flex-col gap-[10px] max-w-[744px] w-full rounded-[8px] border-[#CED9E1] border-[0.5px] py-[12px] px-[20px]"
+    >
       <section className="flex justify-between max-x-[704px] w-full h-[131px] py-[12px] px-[20px] bg-[#FFFFFF]">
         <article className="flex flex-col gap-[20px] w-[174px] h-[107px] py-[12px]">
           <div className="w-[174px] h-[31px] text-[#68696B]">
@@ -85,38 +80,20 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
               companyNameFOREIGN={item?.details.secName || "default korName "}
               // getDisclosure.korName
               // getDisclosure.details.secName
-
             />
           </div>
         </article>
 
         <article className="flex flex-col gap-[14px] w-[395.93px] h-[78px] p-[4px] bg-[#FFFFFF]">
           <div className="flex flex-row gap-[12px] w-[387.93px] h-[30px]">
-            
-            {item.analysisDetails.topicKor.map((item, index) => {
-                return (
-                  <ButtonSmall
-                    key={index}
-                    buttonName={item || "default topicKor"}
-                  />
-                );
-              
+            {item?.analysisDetails?.topicKor?.map((item, index) => {
+              return (
+                <ButtonSmall
+                  key={index}
+                  buttonName={item || "default topicKor"}
+                />
+              );
             }) || "default topicKor"}
-            {/* {item?.analysisDetails?.topicKor?.slice(0,3).map((item, index) => {
-              
-                return (
-                  <ButtonSmall
-                    key={index}
-                    buttonName={item || "default topicKor"}
-                  />
-                );
-              
-            }) || "default topicKor"} */}
-            
-            {/* <ButtonSmall buttonName={item?.analysisDetails.topicKor || "default topicKor"} /> */}
-            {/* <ButtonSmall buttonName="지분 인수" /> */}
-            {/* <ButtonSmall buttonName="현금 지급" /> */}
-
           </div>
           <ButtonLarge
             buttonName={item?.details?.categoryId || "default categoryId"}
@@ -124,7 +101,6 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
         </article>
       </section>
 
-      {/* <section className="flex flex-col gap-[20px] w-full max-w-[704px] h-[247px] py-[12px] px-[20px]"> */}
       <section className="flex flex-col gap-[20px] w-full max-w-[704px]  py-[12px] px-[20px]">
         <ItemDescription
           description={
@@ -141,7 +117,6 @@ const DisclosureItem: React.FC<DisclosureItemProps> = ({
   );
 };
 
-// 이게 왜 필요? ❓❓❓❓❓
 DisclosureItem.displayName = "DisclosureItem";
 
 export default DisclosureItem;

@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 
 export const dummyCategoryIdObj = {
   심천: [
@@ -4699,7 +4697,7 @@ export const totalTestDummy = {
       "getDisclosure" : [
         {
           "id": "9a21576c-ab69-439a-9e27-a3f2cdeabcc7",
-          "dataDate": "2024-05-01T08:43:59Z",
+          "dataDate": "2024-04-26T08:43:59Z",
           "korName": "즈터신소재",
           "details": {
             "secName": [
@@ -4710,8 +4708,7 @@ export const totalTestDummy = {
             ],
             "categoryId": [
               "0129"
-            ], 
-            "fileLink": "",
+            ]
           },
           "analysisDetails": {
             "topicKor": "주식 정보",
@@ -4721,7 +4718,7 @@ export const totalTestDummy = {
         },
         {
           "id": "875664c0-fb5e-4e67-9820-dc8918b9a056",
-          "dataDate": "2024-05-02T08:43:24Z",
+          "dataDate": "2024-04-26T08:43:24Z",
           "korName": "베이루지능제어",
           "details": {
             "secName": [
@@ -4732,8 +4729,7 @@ export const totalTestDummy = {
             ],
             "categoryId": [
               "0129"
-            ], 
-            "fileLink": "",
+            ]
           },
           "analysisDetails": {
             "topicKor": "난징 북로 지능형 제어 기술 주식회사",
@@ -4743,7 +4739,7 @@ export const totalTestDummy = {
         },
         {
           "id": "ea370b79-eca7-4c34-b8a0-75f205f24fa4",
-          "dataDate": "2024-05-03T08:39:26Z",
+          "dataDate": "2024-04-26T08:39:26Z",
           "korName": "킹시그널테크",
           "details": {
             "secName": [
@@ -4754,8 +4750,7 @@ export const totalTestDummy = {
             ],
             "categoryId": [
               "0119"
-            ], 
-            "fileLink": "",
+            ]
           },
           "analysisDetails": {
             "topicKor": "주주총회",
@@ -4776,8 +4771,7 @@ export const totalTestDummy = {
             ],
             "categoryId": [
               "0123"
-            ], 
-            "fileLink": "",
+            ]
           },
           "analysisDetails": {
             "topicKor": "주주 담보 해제",
@@ -4798,15 +4792,14 @@ export const totalTestDummy = {
             ],
             "categoryId": [
               "0129"
-            ], 
-            "fileLink": "",
+            ]
           },
           "analysisDetails": {
             "topicKor": "재무 성과",
             "summarizeTinyKor": "2023년 보쉬의 재무 개요",
             "summarizeLongKor": "2023년 보쉬는 예상순손실이 15억 위안에서 20억 위안 범위에 있을 것으로 예상되며, 비반복적 이익과 손실을 차감한 순손실은 23억 5000만 위안에서 28억 5000만 위안에 이를 것으로 예상됩니다.\n세 번째 연속적인 적자를 맞이한 회사는 계속된 영업 적자 위험에 직면하고 있습니다.\n지배주주인 닝구오 국유 자본 홀딩 그룹은 보쉬와의 경쟁에 직면하고 있으며, 경쟁 문제에 대처하기로 약속했습니다.\n스폰서는 지배주주에게 경쟁에 관한 약속을 이행할 것을 권고했습니다."
           }
-        }
+        },
       ]
     }
   }
@@ -4824,21 +4817,6 @@ const getDummyCategoryIdJSON = () => {
 }
 
 
-
-
-
-// lib/dummyData.ts
-export interface Item {
-  id: number;
-  title: string;
-  body: string;
-}
-
-export interface FetchItemsResponse {
-  data: Item[];
-  nextPage: number;
-  hasMore: boolean;
-}
 
 export const fetchItems = async (page = 0): Promise<FetchItemsResponse> => {
   const itemsPerPage = 10;

@@ -42,9 +42,6 @@ interface QueryParameters {
 }
 
 const Contents = () => {
-  const observer = useRef<IntersectionObserver | null>(null); // Intersection Observer 인스턴스를 저장할 ref
-  const lastElementRef = useRef<HTMLDivElement>(null); // 관찰할 마지막 요소를 참조
-
   const [queryParameters, setQueryParameters] = useState<QueryParameters>({
     startDate: getOneYearAgoDate(),
     endDate: getCurrentDate(),
@@ -99,57 +96,11 @@ const Contents = () => {
     [data, hasNextPage, isFetching];
 
   const handleNextPage = () => {
-    if (!isFetching && status !== "pending")
+    // if (!isFetching && status !== "pending")
       console.log("loadMore 함수 실행⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ");
+      
     if (!isFetching && status !== "pending") fetchNextPage();
   };
-
-  // 마지막 요소 관찰 시킬지 말지를 판단 -> 관찰여부 결정
-  useEffect(() => {
-    console.log("⭐⭐⭐ 첫번째 effect");
-
-    const currentObserver = observer.current;
-    const currentElement = lastElementRef.current; //
-
-    if (
-      isFetchingNextPage ||
-      !hasNextPage ||
-      !currentObserver ||
-      !currentElement
-    )
-      return; // 다음 페이지를 가져오는 중(isFetchingNextPage)이거나 다음 페이지가 없다(!hasNextPage)면 아무것도 하지 않음
-
-    // 마지막 요소를 관찰함
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement && currentObserver) {
-        currentObserver.unobserve(currentElement); // 컴포넌트가 언마운트 될 때, 관찰을 중지
-      }
-    };
-  }, [isFetchingNextPage, hasNextPage]);
-
-  // IntersectionObserver 초기화
-  useEffect(() => {
-    console.log("⭐⭐⭐ 두번째 effect");
-
-    // IntersectionObserver 콜백 함수로 초기화
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        console.log("Observer triggered", entries[0].isIntersecting);
-        console.log("hasNextPage", hasNextPage);
-
-        // 마지막 요소가 화면에 보이고 있고 더 로드할 페이지가 있으면 다음 페이지 로드
-        // if (entries[0].isIntersecting && hasNextPage) {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 1 }
-    );
-  }, []);
 
   return (
     <>
@@ -181,13 +132,12 @@ const Contents = () => {
         />
 
         {/* ⭐⭐⭐⭐⭐ 여기까지 */}
-        <InfiniteScroll
+        {/* <InfiniteScroll
           pageStart={0}
           // loadMore={fetchNextPage}
-
+          
           loadMore={() => {
             console.log("⭐⭐⭐⭐⭐⭐⭐loadMore 함수 실행");
-            fetchNextPage()
           }}
           // loadMore={() => {
           //   // if (!isFetching) fetchNextPage();
@@ -206,15 +156,13 @@ const Contents = () => {
               console.log("⭐InfiniteScroll 페이지 데이터", page);
               if (pageIndex === data.pages.length - 1) {
                 return page.pages.map((item, index) => {
-                  const isLastElement =
-                    pageIndex === data.pages.length - 1 &&
-                    index === page.pages.length - 1;
+                  console.log("⭐InfiniteScroll 아이템 데이터", item);
+                  // ⭐ 좀 못생겼지만, 이렇게 하면 데이터가 꽂힌다.
                   return (
                     <>
                       <DisclosureItem
                         key={item.id}
                         queryParameters={queryParameters}
-                        ref={isLastElement ? lastElementRef : null}
                         item={item}
                       />
                     </>
@@ -223,6 +171,29 @@ const Contents = () => {
               }
             })}
           </section>
+        </InfiniteScroll> */}
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={handleNextPage}
+          hasMore={true || false}
+          // loader={
+          //   <div className="loader" key={0}>
+          //     Loading ...
+          //   </div>
+          // }
+          // threshold={1}
+        >
+          <div>
+            {data?.pages.map((item, index) => {
+              return (
+                <div key={index}>
+                  {item.pages.map((item, index) => {
+                    return <p key={index}>{JSON.stringify(item)}</p>;
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </InfiniteScroll>
 
         {/* 
@@ -233,8 +204,8 @@ const Contents = () => {
         /> */}
 
         {/* ⭐ 마지막 요소를 참조하기 위한 div */}
+        {/* <div ref={lastElementRef} className="h-[100px] w-full bg-blue-300" /> */}
       </div>
-      <div ref={lastElementRef} className="h-[200px] w-full bg-blue-300" />
     </>
   );
 };

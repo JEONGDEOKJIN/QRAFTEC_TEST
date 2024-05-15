@@ -114,33 +114,10 @@ export const getKorCategoryId = (exchangeType: ExchangeType, value: string) => {
 
 
 
-export interface Details {
-  secCode: string[];
-  secName: string[];
-  categoryId: string; // string 타입으로 변경
-  fileLink?: string; // fileLink 필드 추가
-}
-
-export interface AnalysisDetails {
-  topicKor: string;
-  summarizeTinyKor: string;
-  summarizeLongKor: string;
-}
-
-export interface Disclosure {
-  id: string;
-  dataDate: string;
-  korName: string;
-  details: Details;
-  analysisDetails: AnalysisDetails;
-}
 
 
 
 
-
-// export const transformDataFn = async (data : any[] )  => {
-//   console.log("🔥🔥🔥🔥🔥 data", data);
 
 //   const transformData =  data.map( (item : any) => ({
 //     id: item.id,
