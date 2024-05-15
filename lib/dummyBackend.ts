@@ -52,7 +52,7 @@ export const getDisClosureData = async (
     },
   }));
 
-  const PAGE_SIZE = 2;
+  const PAGE_SIZE = 10;
   const startIndex = 0;
   const endIndex = page * PAGE_SIZE + PAGE_SIZE;
 

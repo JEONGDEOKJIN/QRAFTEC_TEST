@@ -89,6 +89,25 @@ const Contents = () => {
     initialPageParam: 0, // react-query V5 이후 추가
   });
 
+  // // 마지막 요소 관찰 시킬지 말지를 판단 -> 관찰여부 결정
+  // useEffect(() => {
+  //   const currentObserver = observer.current;
+  //   const currentElement = lastElementRef.current;
+
+  //   if (isFetchingNextPage || !hasNextPage || !currentObserver || !currentElement) return;
+
+  //   // 마지막 요소를 관찰함
+  //   if (currentElement) {
+  //     currentObserver.observe(currentElement);
+  //   }
+
+  //   return () => {
+  //     if (currentElement && currentObserver) {
+  //       currentObserver.unobserve(currentElement); // 컴포넌트가 언마운트 될 때, 관찰을 중지
+  //     }
+  //   };
+  // }, [isFetchingNextPage, hasNextPage]);
+
   useEffect(() => {
     console.log("------------- Contents 컴포넌트 ------------------");
     console.log("1️⃣ queryFn 에서 바로 찍힘 data 📌📌 : ", data);
@@ -98,58 +117,57 @@ const Contents = () => {
   }),
     [data, hasNextPage, isFetching];
 
-  const handleNextPage = () => {
-    if (!isFetching && status !== "pending")
-      console.log("loadMore 함수 실행⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ ");
-    if (!isFetching && status !== "pending") fetchNextPage();
-  };
+  // const handleNextPage = () => {
+  //   if (!isFetching && status !== "pending")
+  //     console.log("loadMore 함수 실행📌📌📌📌📌 ");
+  //   if (!isFetching || status !== "pending") fetchNextPage();
+  // };
 
   // 마지막 요소 관찰 시킬지 말지를 판단 -> 관찰여부 결정
-  useEffect(() => {
-    console.log("⭐⭐⭐ 첫번째 effect");
+  // useEffect(() => {
+  //   const currentObserver = observer.current;
+  //   const currentElement = lastElementRef.current;
 
-    const currentObserver = observer.current;
-    const currentElement = lastElementRef.current; //
+  //   if (
+  //     isFetchingNextPage ||
+  //     !hasNextPage ||
+  //     !currentObserver ||
+  //     !currentElement
+  //   )
+  //     return; // 다음 페이지를 가져오는 중(isFetchingNextPage)이거나 다음 페이지가 없다(!hasNextPage)면 아무것도 하지 않음
 
-    if (
-      isFetchingNextPage ||
-      !hasNextPage ||
-      !currentObserver ||
-      !currentElement
-    )
-      return; // 다음 페이지를 가져오는 중(isFetchingNextPage)이거나 다음 페이지가 없다(!hasNextPage)면 아무것도 하지 않음
+  //   // 마지막 요소를 관찰함
+  //   if (currentElement) {
+  //     currentObserver.observe(currentElement);
+  //   }
 
-    // 마지막 요소를 관찰함
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
+  //   return () => {
+  //     if (currentElement && currentObserver) {
+  //       currentObserver.unobserve(currentElement); // 컴포넌트가 언마운트 될 때, 관찰을 중지
+  //     }
+  //   };
+  // }, [isFetchingNextPage, hasNextPage]);
 
-    return () => {
-      if (currentElement && currentObserver) {
-        currentObserver.unobserve(currentElement); // 컴포넌트가 언마운트 될 때, 관찰을 중지
-      }
-    };
-  }, [isFetchingNextPage, hasNextPage]);
+  // // IntersectionObserver 초기화
+  // useEffect(() => {
+  //   console.log("⭐⭐⭐ 두번째 effect");
 
-  // IntersectionObserver 초기화
-  useEffect(() => {
-    console.log("⭐⭐⭐ 두번째 effect");
+  //   // IntersectionObserver 콜백 함수로 초기화
+  //   observer.current = new IntersectionObserver(
+  //     (entries) => {
+  //       console.log("Observer triggered", entries[0].isIntersecting);
+  //       console.log("hasNextPage", hasNextPage);
 
-    // IntersectionObserver 콜백 함수로 초기화
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        console.log("Observer triggered", entries[0].isIntersecting);
-        console.log("hasNextPage", hasNextPage);
-
-        // 마지막 요소가 화면에 보이고 있고 더 로드할 페이지가 있으면 다음 페이지 로드
-        // if (entries[0].isIntersecting && hasNextPage) {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 1 }
-    );
-  }, []);
+  //       // 마지막 요소가 화면에 보이고 있고 더 로드할 페이지가 있으면 다음 페이지 로드
+  //       // if (entries[0].isIntersecting && hasNextPage) {
+  //       console.log("📌📌📌 두번째 스크롤!!!!!!!!!!!!");
+  //       if (entries[0].isIntersecting ) {
+  //         fetchNextPage();
+  //       }
+  //     },
+  //     { threshold: 1 }
+  //   );
+  // }, []);
 
   return (
     <>
@@ -183,16 +201,13 @@ const Contents = () => {
         {/* ⭐⭐⭐⭐⭐ 여기까지 */}
         <InfiniteScroll
           pageStart={0}
-          // loadMore={fetchNextPage}
-
           loadMore={() => {
-            console.log("⭐⭐⭐⭐⭐⭐⭐loadMore 함수 실행");
-            fetchNextPage()
+            if (!isFetching && !isFetchingNextPage && hasNextPage) {
+              fetchNextPage();
+            } else {
+              return;
+            }
           }}
-          // loadMore={() => {
-          //   // if (!isFetching) fetchNextPage();
-          //   fetchNextPage();
-          // }}
           hasMore={hasNextPage}
           loader={
             <div className="loader" key={0}>
@@ -212,7 +227,7 @@ const Contents = () => {
                   return (
                     <>
                       <DisclosureItem
-                        key={item.id}
+                        key={index + pageIndex}
                         queryParameters={queryParameters}
                         ref={isLastElement ? lastElementRef : null}
                         item={item}
@@ -223,6 +238,7 @@ const Contents = () => {
               }
             })}
           </section>
+          {/* <div className="w-full h-[200px]" ref={lastElementRef}>hello</div> */}
         </InfiniteScroll>
 
         {/* 
@@ -232,9 +248,11 @@ const Contents = () => {
           lastElementRef={lastElementRef && lastElementRef}
         /> */}
 
-        {/* ⭐ 마지막 요소를 참조하기 위한 div */}
+
       </div>
-      <div ref={lastElementRef} className="h-[200px] w-full bg-blue-300" />
+      {!isFetching && !isFetchingNextPage && hasNextPage && (
+        <div ref={lastElementRef} className="h-[100px] w-full bg-transparent" />
+      )}
     </>
   );
 };
