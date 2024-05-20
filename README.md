@@ -58,7 +58,7 @@
 <details>
   <summary> 무한 스크롤 기능 구현시 useInfiniteQuery 를 사용하여 (dummy) 백엔드에서 filter 처리를 한 이유 </summary>
 
-1. filter 를 클라이언트에서 할지 vs 백엔드에서 할지에 대한 고민 
+1. filter 를 클라이언트에서 할지 vs 백엔드에서 할지에 대한 고민
 
 - 클라이언트에서 filter 메서드로 필터 해주는 경우
 
